@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"sync"
 
-	"github.com/cloudflare/ebpf_exporter/v2/config"
+	"ebpf_exporter/config"
 )
 
 // ErrSkipLabelSet instructs exporter to skip label set
@@ -37,6 +37,7 @@ func NewSet() *Set {
 			"dname":      &Dname{},
 			"uint":       &UInt{},
 			"inet_ip":    &InetIP{},
+			"syscall":    &Syscall{},
 		},
 	}
 }

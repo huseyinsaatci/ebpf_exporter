@@ -12,7 +12,9 @@ GO_LDFLAGS_VARS := -X $(BUILD_VAR_PREFIX).Version=$(BUILD_VERSION) \
 	-X $(BUILD_VAR_PREFIX).BuildDate=$(BUILD_DATE)
 
 GO_LDFLAGS := -ldflags="-extldflags "-static" $(GO_LDFLAGS_VARS)"
-
+LIBBPF_HEADERS := /usr/include/bpf
+LIBBPF_OBJ := /usr/lib64/libbpf.a
+go_env := CC=clang  CGO_CFLAGS="-Wno-everything -I $(LIBBPF_HEADERS) " CGO_LDFLAGS="$(LIBBPF_OBJ) "
 export CGO_LDFLAGS := -l bpf
 
 .PHONY: lint
@@ -26,4 +28,4 @@ test:
 
 .PHONY: build
 build:
-	go build -o ebpf_exporter -v $(GO_LDFLAGS) ./cmd/ebpf_exporter
+	$(go_env) go build -o ebpf_exporter -v $(GO_LDFLAGS) ./cmd/ebpf_exporter

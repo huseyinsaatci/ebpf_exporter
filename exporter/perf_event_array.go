@@ -4,9 +4,10 @@ import (
 	"log"
 	"time"
 
+	"ebpf_exporter/config"
+	"ebpf_exporter/decoder"
+
 	"github.com/aquasecurity/libbpfgo"
-	"github.com/cloudflare/ebpf_exporter/v2/config"
-	"github.com/cloudflare/ebpf_exporter/v2/decoder"
 	"github.com/prometheus/client_golang/prometheus"
 )
 

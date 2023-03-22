@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"math"
 
-	"github.com/cloudflare/ebpf_exporter/v2/config"
+	"ebpf_exporter/config"
 )
 
 type histogramWithLabels struct {

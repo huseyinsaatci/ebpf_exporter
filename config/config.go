@@ -31,6 +31,8 @@ type PerfEvent struct {
 type Metrics struct {
 	Counters   []Counter   `yaml:"counters"`
 	Histograms []Histogram `yaml:"histograms"`
+	IsXDP      bool        `yaml:"is_xdp"`
+	Interfaces []string    `yaml:"interfaces"`
 }
 
 // Counter is a metric defining prometheus counter

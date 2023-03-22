@@ -5,7 +5,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/cloudflare/ebpf_exporter/v2/config"
+	"ebpf_exporter/config"
 )
 
 func TestUIntDecoder(t *testing.T) {

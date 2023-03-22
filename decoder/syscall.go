@@ -1,18 +1,14 @@
 package decoder
 
 import (
-	"fmt"
-	"strconv"
-
 	"ebpf_exporter/config"
 	"ebpf_exporter/util"
+	"fmt"
 )
 
-// UInt is a decoder that transforms unsigned integers into their string values
-type UInt struct{}
+type Syscall struct{}
 
-// Decode transforms unsigned integers into their string values
-func (u *UInt) Decode(in []byte, conf config.Decoder) ([]byte, error) {
+func (s *Syscall) Decode(in []byte, conf config.Decoder) ([]byte, error) {
 	byteOrder := util.GetHostByteOrder()
 
 	result := uint64(0)
@@ -30,5 +26,5 @@ func (u *UInt) Decode(in []byte, conf config.Decoder) ([]byte, error) {
 		return nil, fmt.Errorf("unknown value length %d for %#v", len(in), in)
 	}
 
-	return []byte(strconv.Itoa(int(result))), nil
+	return []byte(util.GetSyscall(result)), nil
 }

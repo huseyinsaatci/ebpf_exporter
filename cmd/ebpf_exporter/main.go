@@ -6,8 +6,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/cloudflare/ebpf_exporter/v2/config"
-	"github.com/cloudflare/ebpf_exporter/v2/exporter"
+	"ebpf_exporter/config"
+	"ebpf_exporter/exporter"
+
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/prometheus/common/version"
