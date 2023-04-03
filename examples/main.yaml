@@ -2,6 +2,16 @@ metrics:
   is_xdp: true
   interfaces: ["enp8s0"] # interfaces to attach to
   counters:
+    - name: xdp_total_packets_map
+      help: Total packet number
+      labels:
+        - name: total_packets
+          size: 4
+          decoders:
+            - name: uint
+            - name: static_map
+              static_map:
+                0: ethernet_packets
     - name: xdp_tcp_map
       help: Shows TCP packets
       labels:
@@ -80,3 +90,10 @@ metrics:
             - name: static_map
               static_map:
                 1: icmp
+    - name: syscall_map
+      help: Displays which syscall called how many times
+      labels:
+        - name: syscall
+          size: 8
+          decoders:
+            - name: syscall

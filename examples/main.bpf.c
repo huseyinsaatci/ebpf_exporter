@@ -54,6 +54,14 @@ struct
   __type(value, u64);
 } xdp_icmp_map SEC(".maps");
 
+struct
+{
+  __uint(type, BPF_MAP_TYPE_HASH);
+  __uint(max_entries, 10000);
+  __type(key, u32);
+  __type(value, u64);
+} xdp_total_packets_map SEC(".maps");
+
 SEC("xdp")
 int xdp_trace(struct xdp_md *ctx)
 {
@@ -62,6 +70,8 @@ int xdp_trace(struct xdp_md *ctx)
   struct ethhdr *eth = (struct ethhdr *)(data);
   if (eth + 1 > (struct ethhdr *)data_end)
     return XDP_PASS;
+  u32 c = 0;
+  increment_map(&xdp_total_packets_map, &c, 1);
   if (eth->h_proto == bpf_htons(ETH_P_IP))
   {
     struct iphdr *iph = data + sizeof(*eth);
@@ -111,4 +121,20 @@ int xdp_trace(struct xdp_md *ctx)
     }
   }
   return XDP_PASS;
+}
+
+struct
+{
+  __uint(type, BPF_MAP_TYPE_HASH);
+  __uint(max_entries, 1024);
+  __type(key, u64);
+  __type(value, u64);
+} syscall_map SEC(".maps");
+
+SEC("tracepoint/raw_syscalls/sys_enter")
+int sys_enter(struct trace_event_raw_sys_enter *ctx)
+{
+  u64 syscall_id = (u64)ctx->id;
+  increment_map(&syscall_map, &syscall_id, 1);
+  return 0;
 }

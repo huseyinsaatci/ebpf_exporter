@@ -29,3 +29,6 @@ test:
 .PHONY: build
 build:
 	$(go_env) go build -o ebpf_exporter -v $(GO_LDFLAGS) ./cmd/ebpf_exporter
+
+run:
+	sudo ./ebpf_exporter --config.dir examples --config.names $(program) --debug
