@@ -25,8 +25,7 @@ func attachModule(module *libbpfgo.Module, cfg config.Config) (map[*libbpfgo.BPF
 					break
 				}
 			}
-		}
-		if !cfg.Metrics.IsXDP || err != nil {
+		} else {
 			_, err = prog.AttachGeneric()
 		}
 
